@@ -55,7 +55,7 @@ def usage():
 
 
     """, 'red', attrs=['bold'])
-
+    print colored("[*] By: Matheus Fidelis aka D0ctor", 'red', attrs=['bold'])
     print colored("[!] Usage: ./kill-router.py -t [TARGET IP] -u [USER TO TEST] -p [PATH TO PASSLIST]", 'red', attrs=['bold'])
     print colored("[!] Usage: ./kill-router.py -t 192.168.0.1 -u admin -p passlist.txt", 'red', attrs=['bold'])
 
