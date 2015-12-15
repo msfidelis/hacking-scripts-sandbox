@@ -51,7 +51,7 @@ def bruteforce(target,passlist,username):
     passwords = fd.readlines()
     i = 0
     print ""
-    print colored("=======================[STARTING TEST]=======================",'yellow', attrs=['bold'])
+    print colored("==========================[STARTING TEST]==========================",'yellow', attrs=['bold'])
     print ""
     for password in passwords:
         i = i + 1
@@ -61,11 +61,11 @@ def bruteforce(target,passlist,username):
         print  colored('[%s]         USER[%s]          PASS [%s]', 'yellow') % (i,username,password)
         if code == 200:
             print ""
-            print colored("=======================[LOGIN FOUNDED]=======================", 'yellow', attrs=['bold'])
+            print colored("==========================[LOGIN FOUNDED]==========================", 'yellow', attrs=['bold'])
             print ""
-            print colored("=============================================================", 'yellow', attrs=['bold'])
-            print colored("              [  :: USER[%s] AND PASS[%s]  ]                 ", 'yellow', attrs=['bold']) % (username, password)
-            print colored("=============================================================", 'yellow', attrs=['bold'])
+            print colored("===================================================================", 'yellow', attrs=['bold'])
+            print colored("                 [  :: USER[%s] AND PASS[%s]  ]                    ", 'green', attrs=['bold']) % (username, password)
+            print colored("===================================================================", 'yellow', attrs=['bold'])
 
             sys.exit()
         else:
