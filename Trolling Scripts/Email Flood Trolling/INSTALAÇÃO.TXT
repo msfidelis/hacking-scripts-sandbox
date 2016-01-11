@@ -1,0 +1,13 @@
+PARA UTILIZAR ESSA BELEZINHA É NECESSÁRIO ALGUMAS COISAS ANTES
+# Instalar o SENDMAIL
+
+# sudo apt-get install sendmail
+# sudo yum install sendmail
+
+# Iniciar o SENDMAIL
+
+# /etc/init.d/sendmail start
+
+# Instalar umas bibliotecas do Python :)
+# pip install email
+# pip install
