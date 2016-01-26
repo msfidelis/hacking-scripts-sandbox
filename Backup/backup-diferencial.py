@@ -1,6 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+'''
+AUTORES: Matheus Fidelis
+Script de Automação do Backup Full semanal e criação de Logs do Fileserver
+para melhorar o script antigo escrito em Shellscript utilizando compactação via tar.gz
 
+Talvez o ultimo script que eu escrevo como estagiário :)
+'''
 
 import subprocess
 import time
@@ -10,19 +16,19 @@ def inicio(horaInicio):
 
     inicio = '''
   ===========================================================================
-||   ____          _____ _  ___    _ _____    ______ _    _ _      _         ||
-||  |  _ \   /\   / ____| |/ / |  | |  __ \  |  ____| |  | | |    | |        ||
-||  | |_) | /  \ | |    | ' /| |  | | |__) | | |__  | |  | | |    | |        ||
-||  |  _ < / /\ \| |    |  < | |  | |  ___/  |  __| | |  | | |    | |        ||
-||  | |_) / ____ \ |____| . \| |__| | |      | |    | |__| | |____| |____    ||
-||  |____/_/    \_\_____|_|\_ \____/|_|      |_|     \____/|______|______|   ||
-||                                                                           ||
-||                       BACKUP FULL DO FILESERVER                           ||
-||                                                                           ||
+||  ____          _____ _  ___    _ _____    _____   _____                   ||
+|| |  _ \   /\   / ____| |/ / |  | |  __ \  |  __ \ / ____|                  ||
+|| | |_) | /  \ | |    | ' /| |  | | |__) | | |__) | (___  _   _ _ __   ___  ||
+|| |  _ < / /\ \| |    |  < | |  | |  ___/  |  _  / \___ \| | | | '_ \ / __| ||
+|| | |_) / ____ \ |____| . \| |__| | |      | | \ \ ____) | |_| | | | | (__  ||
+|| |____/_/    \_\_____|_|\_ \____/|_|      |_|  \_\_____/ \__, |_| |_|\___| ||
+||                                                          __/ |            ||
+||                                                         |___/             ||
+||                    BACKUP DIFERENCIAL DO FILESERVER                       ||
   ===========================================================================
 
   ===========================================================================
-                 BACKUP FULL DO FILESERVER INICIADO ÀS %s
+                BACKUP DIFERENCIAL DO FILESERVER INICIADO ÀS %s
   ===========================================================================
 ''' % horaInicio
     return inicio
@@ -49,8 +55,8 @@ def termino(diaInicio, horaInicio, backup, pathlog):
 #CONSTROI OS LOGS DO SISTEMA - Aqui selecionamos o nome do backup e o arquivo de logs que iremos criar.
 def geralog():
     date = (time.strftime("%Y-%m-%d"))              #
-    logfile     = '%s-backup-full.txt' % date       # Cria o arquivo de Log
-    pathlog     = '/var/log/backup/backup-full/%s' % logfile    # Arquivo de log
+    logfile     = '%s-backup-rsync.txt' % date       # Cria o arquivo de Log
+    pathlog     = '/var/log/backup/backup-rsync/%s' % logfile    # Arquivo de log
 
     return pathlog
 

