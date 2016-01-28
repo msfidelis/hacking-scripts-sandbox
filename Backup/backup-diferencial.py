@@ -108,7 +108,8 @@ def geralog():
 #CONSTROI O ARQUIVO E PATH DE BACKUP E RETORNA
 def gerabackup():
     date = (time.strftime("%Y-%m-%d"))
-    opts = 'rvtl'                                   # Opções que serão passadas com Rsync. Comentários no inicio do Script :)
+    opts    = 'Cravzp'
+    #opts   = 'rvtl'                                  # Opções que serão passadas com Rsync. Comentários no inicio do Script :)
     exclude = '*.log, *.tmp, .recycle'              # Define os diretórios e tipos de arquivos que não vão ter backup
     pathdestino = '/mnt/backupclone/'             # Destino onde será gravado espelhado o backup
     pathorigem  = '/mnt/storage/'                   # pasta que será 'backupeada'
