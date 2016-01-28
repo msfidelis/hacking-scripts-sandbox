@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
 '''
 AUTORES: Matheus Fidelis
 Script de Automação do Backup Full semanal e criação de Logs do Fileserver
@@ -8,7 +9,7 @@ para melhorar o script antigo escrito em Shellscript utilizando compactação vi
 Talvez o ultimo script que eu escrevo como estagiário :)
 
 
-  ===========================================================================
+  ==================================================================================
 || CONSIDERAÇÕES IMPORTANTES SOBRE O RSYNC
 ||  O Script pode ser modificado a vontade. Porém, ele foi criado de antemão
 ||  para os seguintes parâmetros que podem ser modificados na variável 'opts'
@@ -45,13 +46,14 @@ Talvez o ultimo script que eu escrevo como estagiário :)
 ||
 ||    --exclude - exclui do backup alguns tipos de arquivos identificados pelo nome
 ||    pode ser utilizado para ignorar arquivos temporários e logs, como por exemplo
-      --exclude={'*.tmp,*.log'}
+||      --exclude={'*.tmp,*.log'}
 ||
-
+  ==================================================================================
 '''
 
 import subprocess
 import time
+import sys
 
 #Essa função gera um banner com a hora inicial do Backup
 def inicio(horaInicio):
@@ -106,12 +108,14 @@ def geralog():
 #CONSTROI O ARQUIVO E PATH DE BACKUP E RETORNA
 def gerabackup():
     date = (time.strftime("%Y-%m-%d"))
-    opts = '-vzr'                                   # Opções que serão passadas com Rsync. Comentários no inicio do Script :)
+    opts = 'rvtl'                                   # Opções que serão passadas com Rsync. Comentários no inicio do Script :)
     exclude = '*.log, *.tmp, .recycle'              # Define os diretórios e tipos de arquivos que não vão ter backup
-    pathdestino = '/mnt/backupclone/%s'             # Destino onde será gravado espelhado o backup
+    pathdestino = '/mnt/backupclone/'             # Destino onde será gravado espelhado o backup
     pathorigem  = '/mnt/storage/'                   # pasta que será 'backupeada'
-    backup      = 'rsync -%s --exclude={%s} %s %s' % (opts, exclude, pathdestino, pathorigem) # Comando de execução
+    backup      = 'rsync -%s --exclude={%s} %s %s' % (opts, exclude, pathorigem, pathdestino) # Comando de execução
 
+    #print backup
+    #sys.exit()
     return backup
 
 
