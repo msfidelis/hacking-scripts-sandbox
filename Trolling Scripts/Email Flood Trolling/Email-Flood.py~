@@ -52,12 +52,10 @@ def send_emails(email_user,conn):
     email = message.as_string()
 
     #Envia o E-mail
-    i = 0
-    while True:    
+    while 1:
         try:
-    	    i += 1	
             conn.sendmail(FROM, TO, email)
-            print '[%s] Floodando seu amigo.. Pressione CTRL + C para cancelar' % i
+            print 'Floodando seu amigo.. Pressione CTRL + C para cancelar'
         except:
             print 'Fail...'
             sys.exit()
