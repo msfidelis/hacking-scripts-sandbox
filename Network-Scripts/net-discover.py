@@ -1,4 +1,4 @@
-#!/usr/bin/python2.s7
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Author: Matheus Fidelis aka D0ctor
 # Github: https://github.com/msfidelis
@@ -8,31 +8,38 @@
 #Usage: python net-discover.py 192.168.1.0/24
 
 from netaddr import *
-import os, Queue, sys
+import os, sys
 import subprocess
+import multiprocessing as mp
+import argparse
 
 
 def discover(subnet):
-    print '[!] Starting network Scan to %s ' %subnet
-    hosts_up = Queue.Queue()
+    print ('[!] Starting network Scan to %s ' %subnet)
+    hosts_up = mp.Queue()
 
     for host in IPNetwork(subnet):
-        test = 'ping -c 1 -w2 %s >> /dev/null' % host
+        test = 'ping -c 1 -W2 %s >> /dev/null' % host
         #response,result = subprocess.run([test])
 
         response = os.system(test)
         if response == 0:
-            print 'Host %s is UP' % host
+            print ('Host %s is UP' % host)
             hosts_up.put(host)
         else:
-            print 'Host %s not avaliable' % host
+            print ('Host %s not avaliable' % host)
             pass
-    print ''
-    print '[*] LIVE HOSTS'    
+    print ('')
+    print ('[*] LIVE HOSTS')
     while not hosts_up.empty():
         up = hosts_up.get()
-        print '[+] %s ' % up
+        print ('[+] %s ' % up)
 
+def main():
+    parser = argparse.ArgumentParser(description = "Net Discovery", add_help = True, usage="Usage: python %(prog)s 192.168.1.0/24", prog="net-discover.py")
+    parser.add_argument('namespace', help="namespace in format 192.168.1.0/24")
+    args = parser.parse_args()
+    subnet = args.namespace
+    discover(subnet)
 
-subnet = sys.argv[1]
-discover(subnet)
+main()
